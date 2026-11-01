@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Le second degré – Seconde</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fafcff;--grid:#dde8f5;--card:#fff;--tx:#14213d;--mu:#5a6781;--ac:#1d4ed8;--ok:#0f7a4a;--ko:#c2331f;--bd:#cfd9ea;--hl:#e8f0ff;--ex:#fff7e0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1626;--grid:#17233a;--card:#16203a;--tx:#e6ecfa;--mu:#9aa8c7;--ac:#7aa2ff;--ok:#4ade80;--ko:#ff8a78;--bd:#2b3a5c;--hl:#1c2b50;--ex:#2a2a1a}}
+:root[data-theme="dark"]{--bg:#0e1626;--grid:#17233a;--card:#16203a;--tx:#e6ecfa;--mu:#9aa8c7;--ac:#7aa2ff;--ok:#4ade80;--ko:#ff8a78;--bd:#2b3a5c;--hl:#1c2b50;--ex:#2a2a1a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;color:var(--tx);font:16px/1.55 system-ui,-apple-system,Segoe UI,sans-serif}
+.w{max-width:760px;margin:0 auto;padding:16px 14px 60px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;margin:.3em 0}h1{font-size:1.9rem;font-weight:800}h2{font-size:1.45rem}h3{font-size:1.1rem}
+.sub{color:var(--mu);margin:0 0 12px}
+#nav,.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+button{font:inherit;cursor:pointer;border:1.5px solid var(--bd);background:var(--card);color:var(--tx);padding:7px 13px;border-radius:8px}
+button:hover{border-color:var(--ac)}button:focus-visible,input:focus-visible{outline:3px solid var(--ac);outline-offset:1px}
+#nav button{font-weight:600}button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.chips button{font-size:.88rem;padding:5px 10px}
+button.pr{background:var(--ac);color:#fff;border-color:var(--ac)}
+#m{background:var(--card);border:1.5px solid var(--bd);border-radius:12px;padding:6px 18px 18px}
+.box{background:var(--hl);border-left:4px solid var(--ac);padding:8px 14px;border-radius:0 8px 8px 0;margin:10px 0}
+.ex{background:var(--ex);border:1px dashed var(--bd);padding:4px 14px;border-radius:8px;margin:12px 0}
+.sol{background:var(--hl);border-radius:8px;padding:2px 14px;margin-top:12px}.sol:empty{display:none}
+.q{border:1px solid var(--bd);border-radius:10px;padding:8px 14px;margin:12px 0}
+.in,input[type=number]{font:inherit;width:5.5em;padding:5px 7px;border:1.5px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx)}
+label{display:inline-block;margin:4px 12px 4px 0}.ch{display:block;margin:6px 0}
+.nx{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ok{color:var(--ok);font-weight:700}.ko{color:var(--ko);font-weight:700}.mu{color:var(--mu)}.big{font:800 1.6rem Fraunces,serif}
+.sc{overflow-x:auto}.t{border-collapse:collapse;margin:8px 0}.t th,.t td{border:1.5px solid var(--tx);padding:4px 10px;text-align:center;min-width:2.2em}.t th{background:var(--hl)}
+canvas{max-width:100%;height:auto;border:1px solid var(--bd);border-radius:8px;background:var(--card);display:block;margin:8px 0}
+.opt{display:block;width:100%;text-align:left;margin:7px 0}.opt.good{background:var(--ok);color:#fff;border-color:var(--ok)}.opt.bad{background:var(--ko);color:#fff;border-color:var(--ko)}
+</style></head><body><div class="w"><h1>Le second degré</h1><p class="sub">Révisions de Seconde : forme canonique, variations, graphique, équations, factorisation, signe.</p><div id="nav"></div><div id="m"></div></div>
+<script>
+const $=s=>document.querySelector(s),R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,pick=a=>a[R(0,a.length-1)],nz=(a,b)=>{let x;do x=R(a,b);while(!x);return x};
+const fr=x=>{if(Math.abs(x-Math.round(x))<1e-9)return(''+Math.round(x)).replace('-','−');for(let d=2;d<=12;d++){const n=x*d;if(Math.abs(n-Math.round(n))<1e-9){const s=Math.round(n);return(s<0?'−':'')+Math.abs(s)+'/'+d}}return(''+(+x.toFixed(2))).replace('-','−')};
+const par=v=>v<0?'('+fr(v)+')':fr(v),ca=a=>a==1?'':a==-1?'−':fr(a),X=k=>k==0?'x':'x '+(k<0?'+':'−')+' '+fr(Math.abs(k));
+const P=(a,b,c)=>{let s='';const t=(k,v)=>{if(!k)return;const m=Math.abs(k),co=(m==1&&v)?'':fr(m);s+=s?` ${k<0?'−':'+'} ${co}${v}`:`${k<0?'−':''}${co}${v}`};t(a,'x²');t(b,'x');t(c,'');return s||'0'};
+const A=(a,b,c)=>{const D=b*b-4*a*c,al=-b/(2*a),be=a*al*al+b*al+c;let r=[];if(D>0){const q=Math.sqrt(D);r=[(-b-q)/(2*a),(-b+q)/(2*a)].sort((x,y)=>x-y)}else if(D==0)r=[al];return{a,b,c,D,al,be,r}};
+const CS=p=>`${ca(p.a)}${p.al==0?'x':'('+X(p.al)+')'}²${p.be==0?'':` ${p.be<0?'−':'+'} ${fr(Math.abs(p.be))}`}`;
+const GE=p=>{const{a,D,r}=p;if(D>0)return a>0?`]−∞ ; ${fr(r[0])}] ∪ [${fr(r[1])} ; +∞[`:`[${fr(r[0])} ; ${fr(r[1])}]`;if(D==0)return a>0?'ℝ':`{${fr(r[0])}}`;return a>0?'ℝ':'∅'};
+const tbl=rows=>`<div class="sc"><table class="t">${rows.map(r=>`<tr><th>${r[0]}</th>${r.slice(1).map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</table></div>`;
+const tv=p=>{const u=p.a>0;return tbl([['x','−∞','',fr(p.al),'','+∞'],['f(x)',u?'+∞':'−∞',u?'↘':'↗',`<b>${fr(p.be)}</b>`,u?'↗':'↘',u?'+∞':'−∞']])};
+const st=p=>{const{a,D,r}=p,s=a>0?'+':'−',o=a>0?'−':'+';if(D>0)return tbl([['x','−∞','',fr(r[0]),'',fr(r[1]),'','+∞'],['f(x)','',s,'0',o,'0',s,'']]);if(D==0)return tbl([['x','−∞','',fr(r[0]),'','+∞'],['f(x)','',s,'0',s,'']]);return tbl([['x','−∞','','+∞'],['f(x)','',s,'']])};
+const cv=p=>`<canvas data-p="${p.a},${p.b},${p.c}"></canvas>`;
+const S={
+canon:p=>`<p>a = ${fr(p.a)}, b = ${fr(p.b)}, c = ${fr(p.c)}</p><p>α = −b/(2a) = −${par(p.b)}/(2×${par(p.a)}) = <b>${fr(p.al)}</b></p><p>β = f(α) = f(${fr(p.al)}) = <b>${fr(p.be)}</b></p><p>Donc f(x) = <b>${CS(p)}</b></p>`,
+extr:p=>`<p>α = −b/(2a) = ${fr(p.al)} et β = f(α) = ${fr(p.be)}.</p><p>Ici a = ${fr(p.a)} ${p.a>0?'> 0 : f admet un <b>minimum</b>':'< 0 : f admet un <b>maximum</b>'} égal à <b>${fr(p.be)}</b>, atteint en x = <b>${fr(p.al)}</b>.</p>${tv(p)}`,
+roots:p=>{let s=`<p>Δ = b² − 4ac = ${par(p.b)}² − 4×${par(p.a)}×${par(p.c)} = <b>${fr(p.D)}</b></p>`;if(p.D>0)s+=`<p>Δ > 0 : deux solutions, x = (−b − √Δ)/(2a) et x = (−b + √Δ)/(2a).</p><p>S = {<b>${fr(p.r[0])}</b> ; <b>${fr(p.r[1])}</b>}</p>`;else if(p.D==0)s+=`<p>Δ = 0 : une solution double x = −b/(2a) = <b>${fr(p.al)}</b>.</p><p>S = {${fr(p.al)}}</p>`;else s+=`<p>Δ < 0 : l’équation n’a <b>aucune solution réelle</b>.</p><p>S = ∅</p>`;return s},
+fact:p=>p.D>0?`<p>Δ = ${fr(p.D)} > 0, les racines sont ${fr(p.r[0])} et ${fr(p.r[1])}.</p><p>f(x) = a(x − x₁)(x − x₂) = <b>${ca(p.a)}(${X(p.r[0])})(${X(p.r[1])})</b></p>`:p.D==0?`<p>Δ = 0, racine double ${fr(p.al)}.</p><p>f(x) = a(x − α)² = <b>${ca(p.a)}(${X(p.al)})²</b></p>`:`<p>Δ = ${fr(p.D)} < 0 : <b>pas de factorisation</b> dans ℝ.</p>`,
+sign:p=>`<p>Δ = ${fr(p.D)}, a = ${fr(p.a)}.</p>${st(p)}<p>f(x) ≥ 0 sur <b>${GE(p)}</b>.</p>`,
+graph:p=>`<p>Sommet S(${fr(p.al)} ; ${fr(p.be)}), f(0) = ${fr(p.c)}, parabole tournée vers le ${p.a>0?'haut':'bas'}${p.D>=0?'. Intersections avec l’axe des abscisses : '+p.r.map(x=>`(${fr(x)} ; 0)`).join(' et '):'. Aucune intersection avec l’axe des abscisses (Δ < 0)'}.</p>${cv(p)}`};
+function draw(c){const[a,b,cc]=c.dataset.p.split(',').map(Number),p=A(a,b,cc),W=c.width=360,H=c.height=250,g=c.getContext('2d'),css=getComputedStyle(document.documentElement),V=n=>css.getPropertyValue(n).trim(),f=x=>a*x*x+b*x+cc,xs=[p.al,0,...p.r];
+let x0=Math.min(...xs)-2.5,x1=Math.max(...xs)+2.5;if(x1-x0<8){const m=(x0+x1)/2;x0=m-4;x1=m+4}
+const ym=[0,p.be,f(x0),f(x1)];let y0=Math.min(...ym),y1=Math.max(...ym);const pd=(y1-y0)*.1+.5;y0-=pd;y1+=pd;
+const X=x=>(x-x0)/(x1-x0)*W,Y=y=>H-(y-y0)/(y1-y0)*H,sx=Math.ceil((x1-x0)/12),sy=Math.ceil((y1-y0)/8),L=(a,b,c,d)=>{g.beginPath();g.moveTo(a,b);g.lineTo(c,d);g.stroke()};
+g.font='10px sans-serif';g.lineWidth=1;g.strokeStyle=V('--bd');g.fillStyle=V('--mu');
+for(let x=Math.ceil(x0/sx)*sx;x<=x1;x+=sx){L(X(x),0,X(x),H);g.fillText(x,X(x)+2,Y(0)+11)}
+for(let y=Math.ceil(y0/sy)*sy;y<=y1;y+=sy){L(0,Y(y),W,Y(y));if(y)g.fillText(y,X(0)+3,Y(y)-2)}
+g.strokeStyle=V('--tx');g.lineWidth=1.5;L(0,Y(0),W,Y(0));L(X(0),0,X(0),H);
+g.setLineDash([4,4]);g.strokeStyle=V('--mu');L(X(p.al),0,X(p.al),H);g.setLineDash([]);
+g.strokeStyle=V('--ac');g.lineWidth=2.5;g.beginPath();for(let i=0;i<=200;i++){const x=x0+(x1-x0)*i/200;i?g.lineTo(X(x),Y(f(x))):g.moveTo(X(x),Y(f(x)))}g.stroke();
+const dot=(x,y,k)=>{g.fillStyle=V(k);g.beginPath();g.arc(X(x),Y(y),4.5,0,7);g.fill()};p.r.forEach(x=>dot(x,0,'--ok'));dot(p.al,p.be,'--ko')}
+const rd=()=>document.querySelectorAll('canvas[data-p]').forEach(draw),out=h=>{$('#m').innerHTML=h;rd()};
+addEventListener('resize',rd);
+const E=A(2,-4,-6),F=A(-1,4,-3),H0=A(1,-4,4),N=A(1,2,5);
+const ex=(p,fns)=>`<div class="ex"><p><b>Exemple :</b> f(x) = ${P(p.a,p.b,p.c)}</p>${fns.map(k=>S[k](p)).join('')}</div>`;
+const L=[
+['Définition',()=>`<div class="box"><b>Définition.</b> Une fonction polynôme du second degré est une fonction f définie sur ℝ par f(x) = ax² + bx + c, où a, b, c sont des réels avec <b>a ≠ 0</b>. C’est la <i>forme développée</i>. Sa courbe est une <b>parabole</b>.</div><p>Il existe deux autres écritures :</p><ul><li><b>forme canonique</b> : f(x) = a(x − α)² + β</li><li><b>forme factorisée</b> (si Δ ≥ 0) : f(x) = a(x − x₁)(x − x₂)</li></ul><div class="ex"><p><b>Exemple.</b> f(x) = 2x² − 4x − 6 : a = 2, b = −4, c = −6.</p></div>`],
+['Forme canonique',()=>`<div class="box"><b>Propriété.</b> Pour tout x, f(x) = ax² + bx + c = a(x − α)² + β, avec<br><b>α = −b/(2a)</b> et <b>β = f(α)</b>.</div><p><b>Méthode :</b> on calcule α avec la formule, puis β en remplaçant x par α dans f(x).</p>${ex(E,['canon'])}${ex(F,['canon'])}`],
+['Extremum et variations',()=>`<div class="box"><b>Propriété.</b> Comme (x − α)² ≥ 0, f(x) a un extremum β atteint en x = α.<br>• Si <b>a > 0</b> : f décroît sur ]−∞ ; α], croît sur [α ; +∞[, et β est un <b>minimum</b>.<br>• Si <b>a < 0</b> : f croît puis décroît, et β est un <b>maximum</b>.</div>${ex(E,['extr'])}${ex(F,['extr'])}`],
+['Représentation graphique',()=>`<div class="box"><b>Propriété.</b> La courbe de f est une parabole :<br>• de sommet S(α ; β) et d’axe de symétrie la droite x = α ;<br>• tournée vers le haut si a > 0, vers le bas si a < 0 ;<br>• passant par (0 ; c) ;<br>• coupant l’axe des abscisses aux racines (si Δ ≥ 0).</div><p><b>Pour tracer :</b> placer le sommet, l’ordonnée à l’origine et les racines, puis utiliser la symétrie. Sur le graphique : sommet en rouge, racines en vert, axe de symétrie en pointillés.</p>${ex(E,['graph'])}${ex(F,['graph'])}`],
+['Résoudre ax²+bx+c = 0',()=>`<div class="box"><b>Discriminant :</b> Δ = b² − 4ac.<br>• Δ > 0 : deux solutions x₁ = (−b − √Δ)/(2a) et x₂ = (−b + √Δ)/(2a).<br>• Δ = 0 : une solution double x₀ = −b/(2a).<br>• Δ < 0 : aucune solution réelle.</div>${ex(E,['roots'])}${ex(H0,['roots'])}${ex(N,['roots'])}`],
+['Factorisation',()=>`<div class="box"><b>Propriété.</b><br>• Δ > 0 : f(x) = a(x − x₁)(x − x₂).<br>• Δ = 0 : f(x) = a(x − x₀)².<br>• Δ < 0 : f(x) ne se factorise pas dans ℝ.</div>${ex(E,['fact'])}${ex(H0,['fact'])}${ex(N,['fact'])}`],
+['Signe du trinôme',()=>`<div class="box"><b>Propriété.</b><br>• Δ > 0 : f(x) est du signe de a à l’extérieur des racines, du signe de −a entre les racines.<br>• Δ = 0 : f(x) est du signe de a, et s’annule en x₀.<br>• Δ < 0 : f(x) est du signe de a pour tout x.</div>${ex(E,['sign','graph'])}${ex(F,['sign'])}${ex(N,['sign','graph'])}`]];
+const Q=[
+['Forme canonique de x² − 6x + 5 ?',['(x − 3)² + 4','(x − 3)² − 4','(x + 3)² − 4','(x − 6)² + 5'],1,'α = 3 et β = f(3) = 9 − 18 + 5 = −4.'],
+['Pour f(x) = 2x² − 8x + 1, que vaut α ?',['−2','4','2','−4'],2,'α = −b/(2a) = 8/4 = 2.'],
+['f(x) = −x² + 4x − 3 admet :',['un minimum égal à 1','un maximum égal à 1, atteint en 2','un maximum égal à 2, atteint en 1','un minimum égal à −3'],1,'a < 0, α = 2 et f(2) = −4 + 8 − 3 = 1.'],
+['Δ pour x² − 2x − 3 ?',['−8','4','8','16'],3,'Δ = (−2)² − 4×1×(−3) = 4 + 12 = 16.'],
+['x² + x + 1 = 0 a :',['deux solutions','une solution double','aucune solution réelle','une infinité de solutions'],2,'Δ = 1 − 4 = −3 < 0.'],
+['Solutions de x² − 5x + 6 = 0 ?',['1 et 6','−2 et −3','−1 et −6','2 et 3'],3,'Δ = 25 − 24 = 1, donc x = (5 ± 1)/2 : 2 et 3.'],
+['Factorisation de 2x² − 2x − 4 ?',['2(x − 1)(x + 2)','2(x + 1)(x − 2)','(x + 1)(x − 2)','2(x − 1)(x − 2)'],1,'Δ = 36, racines −1 et 2, et a = 2.'],
+['Signe de −x² + 1 ?',['positif sur ]−∞ ; −1] ∪ [1 ; +∞[','toujours négatif','positif sur [−1 ; 1]','toujours positif'],2,'a < 0 : signe de −a (donc positif) entre les racines −1 et 1.'],
+['Si a < 0 et Δ < 0, alors pour tout x :',['f(x) > 0','f(x) < 0','f(x) = 0','le signe dépend de x'],1,'Le trinôme est toujours du signe de a, donc négatif.'],
+['f(x) = a(x − 1)² − 2 avec a > 0. Le minimum est :',['−2 en x = −1','2 en x = 1','−2 en x = 1','1 en x = −2'],2,'Le sommet est S(1 ; −2) et la parabole est tournée vers le haut.'],
+['Si Δ = 0, la forme factorisée est :',['a(x − x₁)(x − x₂) avec x₁ ≠ x₂','a(x − x₀)²','impossible','a(x + x₀)²'],1,'Racine double x₀ = −b/(2a).'],
+['Sommet de la parabole y = x² + 4x + 1 ?',['S(2 ; −3)','S(−2 ; 5)','S(−2 ; −3)','S(4 ; 1)'],2,'x² + 4x + 1 = (x + 2)² − 3, donc α = −2 et β = −3.']];
+const sh=a=>a.map(x=>[Math.random(),x]).sort((u,v)=>u[0]-v[0]).map(u=>u[1]);
+const ci=(txt,opts,cor)=>{const o=sh(opts);return{c:o,ok:o.indexOf(cor),q:txt}};
+const mk=(a,al,be)=>A(a,-2*a*al,a*al*al+be),mr=(a,r1,r2)=>A(a,-a*(r1+r2),a*r1*r2),ca1=()=>pick([1,1,2,-1,-2,3]);
+const dr=()=>{let r1=R(-5,5),r2=R(-5,5);while(r1==r2)r2=R(-5,5);return mr(pick([1,1,2,-1,-2]),r1,r2)};
+const FP=p=>`f(x) = ${P(p.a,p.b,p.c)}`;
+const G={
+canon(){const p=mk(ca1(),R(-4,4),R(-6,6));return{q:`${FP(p)}. Écrire f sous forme canonique a(x − α)² + β : donner α et β.`,f:[['α =',p.al],['β =',p.be]],sol:S.canon(p)}},
+extr(){const p=mk(ca1(),R(-4,4),R(-6,6));return{q:`${FP(p)}. Déterminer l’abscisse et la valeur de l’extremum de f.`,f:[['abscisse =',p.al],['valeur =',p.be]],sol:S.extr(p)}},
+roots(){const p=mr(ca1(),R(-5,5),R(-5,5)),r=p.r;return{q:`Résoudre l’équation ${P(p.a,p.b,p.c)} = 0. Donner la plus petite et la plus grande solution (deux fois la même valeur si la solution est double).`,f:[['x₁ =',r[0]],['x₂ =',r[r.length-1]]],sol:S.roots(p)}},
+fact(){const p=dr();return{q:`Factoriser ${FP(p)} sous la forme a(x − x₁)(x − x₂) avec x₁ < x₂.`,f:[['a =',p.a],['x₁ =',p.r[0]],['x₂ =',p.r[1]]],sol:S.roots(p)+S.fact(p)}},
+sign(){const p=dr(),[x,y]=p.r,o=(x,y)=>`[${fr(x)} ; ${fr(y)}]`,u=(x,y)=>`]−∞ ; ${fr(x)}] ∪ [${fr(y)} ; +∞[`;return{...ci(`${FP(p)}. L’ensemble des solutions de f(x) ≥ 0 est :`,[o(x,y),u(x,y),o(x+1,y+1),u(x+1,y+1)],GE(p)),sol:S.roots(p)+S.sign(p)+cv(p)}},
+disc(){const m=R(0,2),a=ca1(),al=R(-3,3),p=mk(a,al,m==0?0:m==1?-a*R(1,5):a*R(1,5)),t=['Deux solutions distinctes','Une solution double','Aucune solution réelle'];return{...ci(`Combien de solutions réelles admet l’équation ${P(p.a,p.b,p.c)} = 0 ?`,t,t[p.D>0?0:p.D==0?1:2]),sol:S.roots(p)}},
+read(){const p=dr();return{q:`Voici la courbe représentative de f. Lire graphiquement les abscisses (x₁ < x₂) des points d’intersection avec l’axe des abscisses.${cv(p)}`,f:[['x₁ =',p.r[0]],['x₂ =',p.r[1]]],sol:S.graph(p)+S.roots(p)}}};
+const pa=s=>{s=s.replace(/\s/g,'').replace(/−/g,'-').replace(',','.');if(s.includes('/')){const[n,d]=s.split('/');return n/d}return s===''?NaN:+s};
+const qh=(q,i,h='')=>`<div class="q">${h}<p>${q.q}</p>${q.f?q.f.map((f,j)=>`<label>${f[0]} <input id="i${i}_${j}" class="in" type="text" autocomplete="off"></label>`).join(''):q.c.map((c,j)=>`<label class="ch"><input type="radio" name="r${i}" value="${j}"> ${c}</label>`).join('')}<div id="fb${i}"></div></div>`;
+const ck=(q,i)=>{if(q.f)return q.f.every((f,j)=>Math.abs(pa(($('#i'+i+'_'+j)||{}).value||'')-f[1])<.011);const r=document.querySelector(`input[name=r${i}]:checked`);return!!r&&+r.value==q.ok};
+let tab=0,lsec=0,cur={t:'canon',q:0},tot=[0,0],qz={i:0,s:0},ct=null,ep=[1,-2,-3];
+const T=['Leçon','Explorateur','Exercices','QCM','Contrôle'];
+const nav=()=>$('#nav').innerHTML=T.map((t,i)=>`<button class="${i==tab?'on':''}" onclick="go(${i})">${t}</button>`).join('');
+function go(i){tab=i;nav();[lesson,explo,exo,qcm,ctrl][i]()}
+function lesson(){out(`<div class="chips">${L.map((l,i)=>`<button class="${i==lsec?'on':''}" onclick="lsec=${i};lesson()">${i+1}. ${l[0]}</button>`).join('')}</div><h2>${L[lsec][0]}</h2>${L[lsec][1]()}<div class="nx">${lsec>0?`<button onclick="lsec--;lesson()">← Précédent</button>`:''}${lsec<6?`<button class="pr" onclick="lsec++;lesson()">Suivant →</button>`:`<button class="pr" onclick="go(2)">S’entraîner →</button>`}</div>`)}
+function explo(){out(`<h2>Explorateur</h2><p>Saisis a, b et c (a ≠ 0) pour obtenir toute l’étude du trinôme.</p><p>f(x) = <input id="ea" type="number" value="${ep[0]}"> x² + <input id="eb" type="number" value="${ep[1]}"> x + <input id="ec" type="number" value="${ep[2]}"></p><div id="eo"></div>`);['ea','eb','ec'].forEach(i=>$('#'+i).oninput=ee);ee()}
+function ee(){ep=['ea','eb','ec'].map(i=>+$('#'+i).value||0);const o=$('#eo');if(!ep[0]){o.innerHTML='<p class="ko">a doit être différent de 0.</p>';return}const p=A(...ep);o.innerHTML=`<h3>${FP(p)}</h3>`+[['Forme canonique','canon'],['Extremum et variations','extr'],['Équation f(x) = 0','roots'],['Factorisation','fact'],['Signe de f(x)','sign'],['Graphique','graph']].map(([t,k])=>`<h3>${t}</h3>${S[k](p)}`).join('');rd()}
+function exo(n){if(n||!cur.q)cur.q=G[cur.t]();const TY=[['canon','Forme canonique'],['extr','Extremum'],['roots','Équations'],['fact','Factorisation'],['sign','Signe'],['disc','Discriminant'],['read','Graphique']];
+out(`<h2>Exercices</h2><div class="chips">${TY.map(([k,t])=>`<button class="${k==cur.t?'on':''}" onclick="cur.t='${k}';cur.q=0;exo()">${t}</button>`).join('')}</div><p class="mu">Exercices réussis : ${tot[0]} sur ${tot[1]} essayés. Fractions acceptées (ex : 3/2).</p>${qh(cur.q,0)}<div class="nx"><button class="pr" onclick="vf()">Vérifier</button><button onclick="$('#sl').innerHTML='<h3>Correction</h3>'+cur.q.sol;rd()">Correction</button><button onclick="exo(1)">Nouvel exercice</button></div><div id="sl" class="sol"></div>`)}
+function vf(){const ok=ck(cur.q,0);$('#fb0').innerHTML=ok?'<span class="ok">✔ Bravo !</span>':'<span class="ko">✘ Ce n’est pas exact. Réessaie ou ouvre la correction.</span>';if(!cur.q.d){cur.q.d=1;tot[1]++}if(ok&&!cur.q.w){cur.q.w=1;tot[0]++}}
+function qcm(){const i=qz.i;if(i>=Q.length){out(`<h2>QCM terminé</h2><p class="big">${qz.s} / ${Q.length}</p><p>${qz.s>=10?'Excellent !':qz.s>=7?'Bien, revois les points manqués dans la leçon.':'Relis la leçon puis recommence.'}</p><button class="pr" onclick="qz={i:0,s:0};qcm()">Recommencer</button>`);return}
+const q=Q[i];out(`<h2>QCM</h2><p class="mu">Question ${i+1} / ${Q.length} – score : ${qz.s}</p><h3>${q[0]}</h3>${q[1].map((o,j)=>`<button class="opt" onclick="qa(${j})">${o}</button>`).join('')}<div id="qf"></div>`)}
+function qa(j){const q=Q[qz.i];document.querySelectorAll('.opt').forEach((b,k)=>{b.disabled=1;if(k==q[2])b.classList.add('good');else if(k==j)b.classList.add('bad')});if(j==q[2])qz.s++;$('#qf').innerHTML=`<p>${j==q[2]?'<span class="ok">✔ Correct !</span>':'<span class="ko">✘ Faux.</span>'} ${q[3]}</p><button class="pr" onclick="qz.i++;qcm()">Suivant →</button>`}
+function ctrl(){if(!ct){out(`<h2>Contrôle</h2><p>7 exercices, 20 points, 30 minutes. Les énoncés changent à chaque fois. Reste sur cet onglet pendant le contrôle : changer d’onglet efface tes réponses.</p><button class="pr" onclick="cstart()">Commencer</button>`);return}
+if(ct.res)return;const pts=ct.qs.map((q,i)=>qh(q,i,`<b>Exercice ${i+1}</b> <span class="mu">(${q.pts} pt${q.pts>1?'s':''})</span>`)).join('');out(`<h2>Contrôle – <span id="tm"></span></h2>${pts}<button class="pr" onclick="csub()">Rendre la copie</button>`)}
+function cstart(){ct={qs:[['canon',4],['extr',3],['roots',3],['fact',3],['sign',2],['disc',2],['read',3]].map(([t,p])=>({...G[t](),pts:p})),end:Date.now()+18e5,res:0};ct.tm=setInterval(()=>{const s=Math.max(0,Math.round((ct.end-Date.now())/1e3)),e=$('#tm');if(e)e.textContent=`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;if(!s&&tab==4&&!ct.res)csub()},1000);ctrl()}
+function csub(){clearInterval(ct.tm);let n=0;const r=ct.qs.map((q,i)=>{const ok=ck(q,i);if(ok)n+=q.pts;return`<div class="q"><b>Exercice ${i+1}</b> – ${ok?`<span class="ok">✔ ${q.pts}/${q.pts}</span>`:`<span class="ko">✘ 0/${q.pts}</span>`}<p>${q.q}</p><div class="sol"><h3>Correction</h3>${q.sol}</div></div>`}).join('');ct.res=1;out(`<h2>Résultat</h2><p class="big">${n} / 20</p><p>${n>=16?'Très bien !':n>=10?'Correct, relis les corrections.':'À retravailler : reprends la leçon et les exercices.'}</p><button class="pr" onclick="ct=null;ctrl()">Nouveau contrôle</button>${r}`)}
+go(0);
+</script></body></html>
